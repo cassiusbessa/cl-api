@@ -2,11 +2,7 @@ import express from "express";
 import { endpoints } from "./routes";
 import helmet from 'helmet'
 import cors from 'cors'
-import { ErrorHandler } from "./middleware/error.handler";
 import morgan from 'morgan';
-// Check https://github.com/davidbanham/express-async-errors for more info
-require('express-async-errors');
-
 class App {
   private app: express.Application;
 
@@ -27,7 +23,6 @@ class App {
     this.app.use(express.json());
     // Check https://github.com/helmetjs/helmet for more info
     this.app.use(helmet());
-    this.app.use(ErrorHandler)
     this.app.use(endpoints);
     // Add more middlewares as needed here
   }
