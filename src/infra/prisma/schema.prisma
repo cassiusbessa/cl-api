@@ -9,3 +9,66 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id           String        @id @default(uuid())
+  fullname     String
+  email        String        @unique
+  password     String
+  role         Role          @default(null)
+  userProjects UserProject[]
+}
+
+enum Role {
+  ADMIN
+  DEV
+  INVITED
+  null
+}
+
+model Project {
+  id           String        @id @default(uuid())
+  name         String
+  description  String
+  userProjects UserProject[]
+  createdAt    DateTime      @default(now())
+  finishedAt   DateTime?
+  Version      Version[]
+}
+
+model UserProject {
+  id        String  @id @default(uuid())
+  userId    String
+  projectId String
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model Version {
+  id          String    @id @default(uuid())
+  type        String
+  description String
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
+  createdAt   DateTime  @default(now())
+  releasedAt  DateTime?
+  active      Boolean   @default(true)
+  Change      Change[]
+}
+
+model Change {
+  id          String   @id @default(uuid())
+  type        Type
+  description String
+  versionId   String
+  version     Version  @relation(fields: [versionId], references: [id])
+  public      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+enum Type {
+  FIX
+  FEAT
+  STYLE
+  PERFORMANCE
+}
