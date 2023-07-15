@@ -1,10 +1,10 @@
 import { User } from "src/domain/entities/user";
 
 export interface AddAccount {
-    add: (account: AddAccountModel) => Promise<User | null>;
+    add: (account: AccountModel) => Promise<User | null>;
 }
 
-export interface AddAccountModel {
+export interface AccountModel {
     fullName: string;
     email: string;
     password: string;
