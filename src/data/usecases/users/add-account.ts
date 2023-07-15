@@ -10,12 +10,18 @@ export class DbAddAccount implements AddAccount {
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}
 
-  async add (accountData: AddAccountModel): Promise<User | null> {
+  public async add (accountData: AddAccountModel): Promise<User | null> {
     const foundAccount = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
     if (foundAccount) return null
     
     const hashedPassword = await this.hasher.hash(accountData.password)
+
+    accountData.fullName = this.formateFullName(accountData.fullName)
     const user = await this.addAccountRepository.add({ ...accountData, password: hashedPassword })
     return user
+  }
+
+  private formateFullName (fullName: string): string {
+    return fullName.trim().split(' ').map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ')
   }
 }
