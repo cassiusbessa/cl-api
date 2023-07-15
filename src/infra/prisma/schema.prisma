@@ -12,10 +12,10 @@ datasource db {
 
 model User {
   id           String        @id @default(uuid())
-  fullname     String
+  fullName     String
   email        String        @unique
   password     String
-  role         Role          @default(null)
+  role         Role?
   userProjects UserProject[]
 }
 
@@ -23,7 +23,6 @@ enum Role {
   ADMIN
   DEV
   INVITED
-  null
 }
 
 model Project {
