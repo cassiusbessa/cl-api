@@ -1,7 +1,7 @@
-import { Hasher } from "src/data/protocols/cryptography"
 import { AddAccountRepository, LoadAccountByEmailRepository } from "src/data/protocols/repositories/user-repository"
 import { User } from "src/domain/entities/user"
-import { AddAccount, AddAccountModel } from "src/domain/usecases/users/add-account"
+import { AddAccount, AccountModel } from "src/domain/usecases/users/add-account"
+import { Hasher } from "src/domain/usecases/users/authentication"
 
 export class DbAddAccount implements AddAccount {
   constructor (
@@ -10,7 +10,7 @@ export class DbAddAccount implements AddAccount {
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}
 
-  public async add (accountData: AddAccountModel): Promise<User | null> {
+  public async add (accountData: AccountModel): Promise<User | null> {
     const foundAccount = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
     if (foundAccount) return null
     

@@ -1,8 +1,8 @@
 import { User } from "src/domain/entities/user";
-import { AddAccountModel } from "src/domain/usecases/users/add-account";
+import { AccountModel } from "src/domain/usecases/users/add-account";
 
 export interface AddAccountRepository {
-  add: (accountData: AddAccountModel) => Promise<User>
+  add: (accountData: AccountModel) => Promise<User>
 }
 
 export interface LoadAccountByEmailRepository {
