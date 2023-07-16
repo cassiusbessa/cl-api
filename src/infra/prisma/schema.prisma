@@ -27,11 +27,12 @@ enum Role {
 
 model Project {
   id           String        @id @default(uuid())
-  name         String
+  name         String        @unique
   description  String
   userProjects UserProject[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  public       Boolean       @default(false)
   Version      Version[]
 }
 
