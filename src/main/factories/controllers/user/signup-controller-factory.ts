@@ -4,7 +4,7 @@ import { Validator } from "../../../../presentation/protocols/validator";
 import { EmailValidator } from "../../../../presentation/validators/email-validator";
 import { RequiredFieldValidator } from "../../../../presentation/validators/required-fields-validator";
 import { ValidatorComposite } from "../../../../presentation/validators/validator-composite";
-import { makeUserRepository } from "../../repositories/user-repository-factory";
+import { makeUserRepository } from "../../repositories";
 import { DbAddAccount } from "../../../../data/usecases/users/add-account";
 import { BcryptAdapter } from "../../../../infra/cryptography/bcrypt-adapter";
 

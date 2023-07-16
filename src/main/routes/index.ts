@@ -5,6 +5,7 @@ import { makeUpdateAccountController } from "../factories/controllers/user/updat
 import { makeLoginController } from "../factories/controllers/user/login-controller-factory";
 import { expressAdapterMiddleware } from "../adapters/express-middleware-adapter";
 import { makeAuthMiddleware } from "../factories/middleware/auth-middleware";
+import { makeCreateProjectController } from "../factories/controllers/project/create-project-factory";
 
 export const endpoints: Router = Router();
 
@@ -16,6 +17,9 @@ endpoints.route("/login")
 
 endpoints.route("/users/:id")
     .patch(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeUpdateAccountController()));
+
+endpoints.route("/projects")
+    .post(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeCreateProjectController()));
     
 // endpoints.route("/:id")
 //     .get(Handler)

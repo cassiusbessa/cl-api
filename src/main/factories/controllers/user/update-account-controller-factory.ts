@@ -1,5 +1,5 @@
 import { UpdateAccountController } from "../../../../presentation/controllers/user/update-account-controller";
-import { makeUserRepository } from "../../repositories/user-repository-factory";
+import { makeUserRepository } from "../../repositories";
 import { DbUpdateAccount } from "../../../../data/usecases/users/update-account";
 import { BcryptAdapter } from "../../../../infra/cryptography/bcrypt-adapter";
 import { DbLoadAccountById } from "../../../../data/usecases/users/load-account-by-id";
