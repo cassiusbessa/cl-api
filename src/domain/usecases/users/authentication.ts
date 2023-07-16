@@ -1,18 +1,12 @@
-export interface TokenGenerator {
-  generate: (accountModel: TokenPayload) => string
+import { User } from "@/domain/entities/user"
+
+export interface Authentication {
+  auth: (login: Credentials, user: User) => Promise<string | null>
 }
 
-export interface TokenPayload {
-  id: string
-  fullName: string
+export interface Credentials {
   email: string
-  role: string | null
+  password: string
 }
 
-export interface TokenValidator {
-  tokenRead: (token: string) => Promise<TokenPayload>
-}
 
-export interface Hasher {
-  hash: (value: string) => Promise<string>
-}
