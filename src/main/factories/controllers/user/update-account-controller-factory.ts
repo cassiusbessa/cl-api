@@ -5,12 +5,13 @@ import { BcryptAdapter } from "../../../../infra/cryptography/bcrypt-adapter";
 import { DbLoadAccountById } from "../../../../data/usecases/users/load-account-by-id";
 import { RequiredFieldValidator } from "../../../../presentation/validators/required-fields-validator";
 import { ValidatorComposite } from "../../../../presentation/validators/validator-composite";
+import { RoleValidator } from "../../../../presentation/validators/role-validator";
 import { Validator } from "../../../../presentation/protocols/validator";
 
 export const makeSignUpValidator = (): Validator => { 
   const requiredFields = ['id']
   const requiredFieldValidator = new RequiredFieldValidator(requiredFields)
-  const roleValidator = new RequiredFieldValidator(['role'])
+  const roleValidator = new RoleValidator()
   
   return new ValidatorComposite([requiredFieldValidator, roleValidator])
 }

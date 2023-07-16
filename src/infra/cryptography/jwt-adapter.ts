@@ -5,8 +5,8 @@ import { TokenGenerator, TokenPayload, TokenValidator } from 'src/domain/usecase
 export class JwtAdapter implements TokenGenerator, TokenValidator  {
   constructor (private readonly secret: string = process.env.JWT_SECRET || 'secret') {}
 
-  generate (tokenPayload: TokenPayload): string {
-    const accessToken = jwt.sign({ tokenPayload }, this.secret)
+  generate (id: string): string {
+    const accessToken = jwt.sign({ id }, this.secret)
     return accessToken
   }
 

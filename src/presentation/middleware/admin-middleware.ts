@@ -20,7 +20,7 @@ export class AdminMiddleware implements Middleware {
       return ok(tokenPayload)
 
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return serverError(error as Error)
     }
   }

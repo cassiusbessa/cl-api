@@ -10,8 +10,6 @@ export class UpdateAccountController implements Controller {
   constructor (private readonly updateAccount: UpdateAccount, private readonly loadAccountById: LoadAccountById, private readonly validator: Validator) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    console.log('UpdateAccountController: handle', httpRequest )
-
     try {
 
       const error = this.validator.validate({ ...httpRequest.body, id: httpRequest.params.id })
@@ -26,7 +24,7 @@ export class UpdateAccountController implements Controller {
       return ok({message: updatedStatus})
       
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return serverError(error as Error)
     }
   }

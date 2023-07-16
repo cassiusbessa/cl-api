@@ -24,7 +24,6 @@ export class UserRepository implements AddAccountRepository, LoadAccountByEmailR
   }
 
   async loadById(id: string): Promise<User | null> {
-    console.log(id);
     return await this.prisma.user.findUnique({where: {id}});
   }
 
