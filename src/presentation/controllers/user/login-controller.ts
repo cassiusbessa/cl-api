@@ -24,6 +24,8 @@ export class LoginController implements Controller {
       const account = await this.loadAccount.load(email)
       if(!account) return notFound(new NotFoundError('user'))
 
+      if(!account.role) return unauthorized(new AccessDeniedError())
+
       const auth = await this.authentication.auth({email, password}, account)
       if (!auth) return unauthorized(new AccessDeniedError())
   
