@@ -1,8 +1,8 @@
+import { Hasher } from "@/data/protocols/authentication"
 import { formatFullName } from "../../../utils"
 import { AddAccountRepository, LoadAccountByEmailRepository } from "src/data/protocols/repositories/user-repository"
 import { User } from "src/domain/entities/user"
 import { AddAccount, AccountModel } from "src/domain/usecases/users/add-account"
-import { Hasher } from "src/domain/usecases/users/authentication"
 
 export class DbAddAccount implements AddAccount {
   constructor (
