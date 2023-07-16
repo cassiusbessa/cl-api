@@ -3,5 +3,11 @@ export interface User {
   fullName: string
   email: string
   password: string
-  role: string | null
+  role: Role | null
+}
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  DEV = 'DEV',
+  GUEST = 'GUEST'
 }

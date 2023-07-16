@@ -1,4 +1,4 @@
-import { formatFullName } from "@/utils"
+import { formatFullName } from "../../../utils"
 import { AddAccountRepository, LoadAccountByEmailRepository } from "src/data/protocols/repositories/user-repository"
 import { User } from "src/domain/entities/user"
 import { AddAccount, AccountModel } from "src/domain/usecases/users/add-account"

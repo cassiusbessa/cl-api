@@ -22,7 +22,7 @@ model User {
 enum Role {
   ADMIN
   DEV
-  INVITED
+  GUEST
 }
 
 model Project {
