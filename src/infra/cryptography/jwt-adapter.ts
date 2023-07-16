@@ -1,12 +1,17 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-import { GenerateToken, TokenPayload } from 'src/domain/usecases/users/authentication'
+import { TokenGenerator, TokenPayload, TokenValidator } from 'src/domain/usecases/users/authentication'
 
-export class JwtAdapter implements GenerateToken {
+export class JwtAdapter implements TokenGenerator, TokenValidator  {
   constructor (private readonly secret: string = process.env.JWT_SECRET || 'secret') {}
 
   generate (tokenPayload: TokenPayload): string {
     const accessToken = jwt.sign({ tokenPayload }, this.secret)
     return accessToken
+  }
+
+  async tokenRead (token: string): Promise<TokenPayload> {
+    const tokenPayload = jwt.verify(token, this.secret) as TokenPayload
+    return tokenPayload
   }
 }
