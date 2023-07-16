@@ -1,5 +1,5 @@
 import { AddAccount } from "src/domain/usecases/users/add-account"
-import { EmailInUseError } from "../../errors"
+import { ParamInUseError } from "../../errors"
 import { Controller } from "../../protocols/controller"
 import { HttpRequest, HttpResponse } from "../../protocols/http"
 import { badRequest, forbidden, ok, serverError } from "../../protocols/http-responses"
@@ -19,7 +19,7 @@ export class SignUpController implements Controller {
       const { fullName, email, password } = httpRequest.body
 
       const account = await this.addAccount.add({fullName, email, password})
-      if(!account) return forbidden(new EmailInUseError())
+      if(!account) return forbidden(new ParamInUseError('email'))
   
       return ok({account})
       

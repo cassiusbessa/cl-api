@@ -1,5 +1,5 @@
 import { LoadAccountById } from "@/domain/usecases/users/load-account-by-id"
-import { EmailInUseError, NotFoundError } from "../../errors"
+import { ParamInUseError, NotFoundError } from "../../errors"
 import { Controller } from "../../protocols/controller"
 import { HttpRequest, HttpResponse } from "../../protocols/http"
 import { badRequest, forbidden, notFound, ok, serverError } from "../../protocols/http-responses"
@@ -19,7 +19,7 @@ export class UpdateAccountController implements Controller {
       if(!account) return notFound(new NotFoundError('User'))
 
       const updatedStatus = await this.updateAccount.update({...httpRequest.body, id: httpRequest.params.id})
-      if(!updatedStatus) return forbidden(new EmailInUseError())
+      if(!updatedStatus) return forbidden(new ParamInUseError('email'))
   
       return ok({message: updatedStatus})
       
