@@ -1,7 +1,7 @@
 import { UpdateAccount, UpdateAccountModel } from "@/domain/usecases/users/update-account"
 import { formatFullName } from "../../../utils"
 import { UpdateAccountRepository, LoadAccountByEmailRepository } from "src/data/protocols/repositories/user-repository"
-import { Hasher } from "src/domain/usecases/users/authentication"
+import { Hasher } from "@/data/protocols/authentication"
 
 export class DbUpdateAccount implements UpdateAccount {
   constructor (
