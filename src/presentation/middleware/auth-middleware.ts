@@ -5,12 +5,10 @@ import { HttpRequest, HttpResponse } from "../protocols/http"
 import { ok, serverError, unauthorized } from "../protocols/http-responses"
 import { Middleware } from "../protocols/middleware"
 
-export class AdminMiddleware implements Middleware {
-  constructor (private readonly loadAccountToken: LoadAccountById) {}
+export class AuthMiddleware implements Middleware {
+  constructor (private readonly loadAccountToken: LoadAccountById, private readonly allowedRoles: string[]) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-
-    console.log(httpRequest.headers)
 
     try {
       const token = httpRequest.headers?.['x-access-token']
@@ -20,7 +18,9 @@ export class AdminMiddleware implements Middleware {
       if (!account) return unauthorized(new AccessDeniedError())
 
       const { role } = account
-      if (role !== 'ADMIN') return unauthorized(new AccessDeniedError())
+      if(!role) return unauthorized(new AccessDeniedError())
+
+      if (!this.allowedRoles.includes(role)) return unauthorized(new AccessDeniedError())
 
       return ok({user: account})
 
