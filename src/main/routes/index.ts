@@ -1,15 +1,14 @@
 import { Router } from "express";
-import { Handler } from "../../presentation";
+import { expressAdapterController } from "../adapters/express-route-adapter";
+import { makeSignUpController } from "../factories/controllers/users-controllers-factories";
 
 export const endpoints: Router = Router();
 
-endpoints.route("/")
-    .get(Handler)
-    .get(Handler)
-    .post(Handler);
+endpoints.route("/signup")
+    .post(expressAdapterController(makeSignUpController()));
     
-endpoints.route("/:id")
-    .get(Handler)
-    .delete(Handler)
-    .put(Handler)
-    .patch(Handler);
+// endpoints.route("/:id")
+//     .get(Handler)
+//     .delete(Handler)
+//     .put(Handler)
+//     .patch(Handler);
