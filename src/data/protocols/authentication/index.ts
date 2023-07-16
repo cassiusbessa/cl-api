@@ -3,13 +3,10 @@ export interface TokenGenerator {
 }
 export interface TokenPayload {
   id: string
-  fullName: string
-  email: string
-  role: string | null
 }
 
-export interface TokenValidator {
-  tokenRead: (token: string) => Promise<TokenPayload>
+export interface TokenRead {
+  read: (token: string) => Promise<TokenPayload>
 }
 
 export interface Hasher {

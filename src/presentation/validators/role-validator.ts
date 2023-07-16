@@ -1,4 +1,3 @@
-import { Role } from '../../domain/entities/user'
 import { Validator } from '../protocols/validator'
 import { InvalidParamError } from '../errors';
 
