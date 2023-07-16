@@ -31,7 +31,7 @@ model Project {
   description  String
   userProjects UserProject[]
   createdAt    DateTime      @default(now())
-  finishedAt   DateTime?
+  updatedAt    DateTime      @updatedAt
   Version      Version[]
 }
 
