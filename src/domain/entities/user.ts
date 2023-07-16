@@ -6,8 +6,4 @@ export interface User {
   role: Role | null
 }
 
-export enum Role {
-  ADMIN = 'ADMIN',
-  DEV = 'DEV',
-  GUEST = 'GUEST'
-}
+export type Role = 'ADMIN' | 'DEV' | 'GUEST'
