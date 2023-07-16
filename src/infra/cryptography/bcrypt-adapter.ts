@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { Hasher } from 'src/domain/usecases/users/authentication'
+import { Hasher } from '@/domain/usecases/users/authentication'
 
 export class BcryptAdapter implements Hasher {
   constructor (private readonly salt: number) {}
