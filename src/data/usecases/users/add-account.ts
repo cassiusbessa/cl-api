@@ -1,3 +1,4 @@
+import { formatFullName } from "@/utils"
 import { AddAccountRepository, LoadAccountByEmailRepository } from "src/data/protocols/repositories/user-repository"
 import { User } from "src/domain/entities/user"
 import { AddAccount, AccountModel } from "src/domain/usecases/users/add-account"
@@ -16,12 +17,8 @@ export class DbAddAccount implements AddAccount {
     
     const hashedPassword = await this.hasher.hash(accountData.password)
 
-    accountData.fullName = this.formateFullName(accountData.fullName)
+    accountData.fullName = formatFullName(accountData.fullName)
     const user = await this.addAccountRepository.add({ ...accountData, password: hashedPassword })
     return user
-  }
-
-  private formateFullName (fullName: string): string {
-    return fullName.trim().split(' ').map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ')
   }
 }
