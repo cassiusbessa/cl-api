@@ -1,9 +1,9 @@
 import { AddAccount } from "src/domain/usecases/users/add-account"
-import { EmailInUseError } from "src/presentation/errors"
-import { Controller } from "src/presentation/protocols/controller"
-import { HttpRequest, HttpResponse } from "src/presentation/protocols/http"
-import { badRequest, forbidden, ok, serverError } from "src/presentation/protocols/http-responses"
-import { Validator } from "src/presentation/protocols/validator"
+import { EmailInUseError } from "../../errors"
+import { Controller } from "../../protocols/controller"
+import { HttpRequest, HttpResponse } from "../../protocols/http"
+import { badRequest, forbidden, ok, serverError } from "../../protocols/http-responses"
+import { Validator } from "../../protocols/validator"
 
 export class SignUpController implements Controller {
   constructor (private readonly addAccount: AddAccount, private readonly validator: Validator) {}
@@ -24,6 +24,7 @@ export class SignUpController implements Controller {
       return ok({account})
       
     } catch (error) {
+      console.log(error)
       return serverError(error as Error)
     }
   }
