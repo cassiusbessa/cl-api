@@ -1,11 +1,12 @@
+import { AccountDetails } from '@/domain/usecases/users/load-account-details-by-id';
 import { UpdateAccountModel } from '@/domain/usecases/users/update-account';
 import { PrismaClient } from '@prisma/client';
-import { AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, LoadAllAccountsRepository, UpdateAccountRepository } from 'src/data/protocols/repositories/user-repository';
+import { AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, LoadAccountDetailsByIdRepository, LoadAllAccountsRepository, UpdateAccountRepository } from 'src/data/protocols/repositories/user-repository';
 import { User } from 'src/domain/entities/user';
 import { AccountModel } from 'src/domain/usecases/users/add-account';
 
 
-export class UserRepository implements AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, UpdateAccountRepository, LoadAllAccountsRepository {
+export class UserRepository implements AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, UpdateAccountRepository, LoadAllAccountsRepository, LoadAccountDetailsByIdRepository {
   private readonly prisma = new PrismaClient();
 
   async add(accountData: AccountModel): Promise<User> {
@@ -27,8 +28,42 @@ export class UserRepository implements AddAccountRepository, LoadAccountByEmailR
     return await this.prisma.user.findUnique({where: {id}});
   }
 
-  async loadAll(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+  async loadAll(): Promise<Omit<User, 'password'>[]> {
+    return await this.prisma.user.findMany(
+      {
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
+          role: true
+        }
+      }
+    );
   }
+
+  async loadDetails(id: string): Promise<AccountDetails | null> {
+    const find = await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        userProjects: {
+          include: {
+            project: true
+          }
+        }
+      }
+    });
+  
+    if (!find) return null;
+  
+    const projects = find.userProjects.map(userProject => userProject.project);
+    const user = {id: find.id, fullName: find.fullName, email: find.email, role: find.role}
+  
+    return {
+      user,
+      projects
+    };
+  }
+
+
 
 }

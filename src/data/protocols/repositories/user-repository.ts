@@ -1,3 +1,4 @@
+import { AccountDetails } from "@/domain/usecases/users/load-account-details-by-id";
 import { UpdateAccountModel } from "@/domain/usecases/users/update-account";
 import { User } from "src/domain/entities/user";
 import { AccountModel } from "src/domain/usecases/users/add-account";
@@ -19,5 +20,9 @@ export interface UpdateAccountRepository {
 }
 
 export interface LoadAllAccountsRepository {
-  loadAll: () => Promise<User[]>
+  loadAll: () => Promise<Omit<User, 'password'>[]>
+}
+
+export interface LoadAccountDetailsByIdRepository {
+  loadDetails: (id: string) => Promise<AccountDetails | null>
 }

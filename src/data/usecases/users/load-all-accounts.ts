@@ -5,7 +5,7 @@ import { LoadAllAccounts } from "@/domain/usecases/users/load-all-acounts";
 export class DbLoadAllAccounts implements LoadAllAccounts {
   constructor (private readonly loadAllAccountsRepository: LoadAllAccountsRepository) {}
 
-  async load (): Promise<User[]> {
+  async load (): Promise<Omit<User, 'password'>[]> {
     const users = await this.loadAllAccountsRepository.loadAll()
     return users
   }
