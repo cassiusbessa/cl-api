@@ -29,7 +29,7 @@ export class LoginController implements Controller {
       const auth = await this.authentication.auth({email, password}, account)
       if (!auth) return unauthorized(new AccessDeniedError())
   
-      return ok({accessToken: auth})
+      return ok({accessToken: auth, account})
       
     } catch (error) {
       console.error(error)
