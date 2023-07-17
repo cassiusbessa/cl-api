@@ -17,3 +17,7 @@ export interface LoadAccountByIdRepository {
 export interface UpdateAccountRepository {
   update: (updateAccountData: UpdateAccountModel) => Promise<boolean>
 }
+
+export interface LoadAllAccountsRepository {
+  loadAll: () => Promise<User[]>
+}

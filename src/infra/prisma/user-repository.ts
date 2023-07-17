@@ -1,11 +1,11 @@
 import { UpdateAccountModel } from '@/domain/usecases/users/update-account';
 import { PrismaClient } from '@prisma/client';
-import { AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, UpdateAccountRepository } from 'src/data/protocols/repositories/user-repository';
+import { AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, LoadAllAccountsRepository, UpdateAccountRepository } from 'src/data/protocols/repositories/user-repository';
 import { User } from 'src/domain/entities/user';
 import { AccountModel } from 'src/domain/usecases/users/add-account';
 
 
-export class UserRepository implements AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, UpdateAccountRepository {
+export class UserRepository implements AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByIdRepository, UpdateAccountRepository, LoadAllAccountsRepository {
   private readonly prisma = new PrismaClient();
 
   async add(accountData: AccountModel): Promise<User> {
@@ -25,6 +25,10 @@ export class UserRepository implements AddAccountRepository, LoadAccountByEmailR
 
   async loadById(id: string): Promise<User | null> {
     return await this.prisma.user.findUnique({where: {id}});
+  }
+
+  async loadAll(): Promise<User[]> {
+    return await this.prisma.user.findMany();
   }
 
 }
