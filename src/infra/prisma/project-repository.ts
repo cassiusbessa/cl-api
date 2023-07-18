@@ -1,10 +1,11 @@
-import { CreateProjectRepository, LoadProjectByIdRepository, LoadProjectByNameRepository, UpdateProjectRepository } from "@/data/protocols/repositories/project-repository";
+import { CreateProjectRepository, LoadProjectByIdRepository, LoadProjectByNameRepository, LoadProjectDetailsByIdRepository, UpdateProjectRepository } from "@/data/protocols/repositories/project-repository";
 import { Project } from "@/domain/entities/project";
 import { ProjectModel } from "@/domain/usecases/project/create-project";
+import { ProjectDetails } from "@/domain/usecases/project/load-project-details-by-id";
 import { UpdateProjectModel } from "@/domain/usecases/project/update-project";
 import { PrismaClient } from "@prisma/client";
 
-export class ProjectRepository implements CreateProjectRepository, LoadProjectByIdRepository, LoadProjectByNameRepository, UpdateProjectRepository {
+export class ProjectRepository implements CreateProjectRepository, LoadProjectByIdRepository, LoadProjectByNameRepository, UpdateProjectRepository, LoadProjectDetailsByIdRepository {
   private readonly prisma = new PrismaClient();
 
   async create(projectModel: ProjectModel): Promise<Project> {
@@ -24,6 +25,26 @@ export class ProjectRepository implements CreateProjectRepository, LoadProjectBy
     await this.prisma.project.update({where: {id}, data});
     return true
   }
+
+  async loadDetailsById(projectId: string): Promise<ProjectDetails | null> {
+    const project = await this.prisma.project.findUnique({where: {id: projectId}, include: {Version: true}});
+    if (!project) return null;
+
+    const versions = await this.prisma.version.findMany({where: {projectId}, include: {Change: true}});
+    if (!versions) {
+      return {project, versions: []};
+    }
+
+    const versionsWithChanges = versions.map(version => {
+      const changes = version.Change;
+      return {version, changes};
+    });
+
+    return {project, versions: versionsWithChanges};
+  }
+
+
+
 
 
 }

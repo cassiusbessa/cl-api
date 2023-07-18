@@ -46,13 +46,14 @@ model UserProject {
 
 model Version {
   id          String    @id @default(uuid())
-  type        String
+  name        String
   description String
   projectId   String
   project     Project   @relation(fields: [projectId], references: [id])
-  createdAt   DateTime  @default(now())
-  releasedAt  DateTime?
   active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  releasedAt  DateTime?
   Change      Change[]
 }
 

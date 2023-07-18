@@ -9,6 +9,7 @@ import { makeCreateProjectController } from "../factories/controllers/project/cr
 import { makeUpdateProjectController } from "../factories/controllers/project/update-project-factory";
 import { makeLoadAllAccountsController } from "../factories/controllers/user/load-all-accounts-controller-factory";
 import { makeLoadAccountDetailsByIdController } from "../factories/controllers/user/load-account-details-by-id-factory";
+import { makeLoadProjectDetailsByIdController } from "../factories/controllers/project/load-project-details-by-id-factory";
 
 export const endpoints: Router = Router();
 
@@ -29,7 +30,8 @@ endpoints.route("/projects")
     .post(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeCreateProjectController()));
 
 endpoints.route("/projects/:id")
-    .patch(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeUpdateProjectController()));
+    .patch(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeUpdateProjectController()))
+    .get(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN', 'DEV', 'GUEST'])), expressAdapterController(makeLoadProjectDetailsByIdController()));
     
 // endpoints.route("/:id")
 //     .get(Handler)
