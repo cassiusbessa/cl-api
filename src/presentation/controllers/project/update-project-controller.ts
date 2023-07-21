@@ -19,7 +19,6 @@ export class UpdateProjectController implements Controller {
         }
 
         const project = await this.loadProjectById.load(httpRequest.params.id)
-        console.log(project)
         if (!project) return notFound(new NotFoundError('Project'))
   
         const updatedStatus = await this.updateProject.update({...httpRequest.body, id: httpRequest.params.id})

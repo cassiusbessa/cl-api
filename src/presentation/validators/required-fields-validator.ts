@@ -5,7 +5,6 @@ export class RequiredFieldValidator implements Validator {
   constructor (private readonly fields: string[]) {}
 
   validate (input: any): Error | null {
-    console.log('RequiredFieldValidator', input)
     for (const field of this.fields) {
       if (!input[field]) {
         console.log(`MissingParamError: ${field}`)

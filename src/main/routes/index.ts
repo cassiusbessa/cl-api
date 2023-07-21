@@ -10,6 +10,7 @@ import { makeUpdateProjectController } from "../factories/controllers/project/up
 import { makeLoadAllAccountsController } from "../factories/controllers/user/load-all-accounts-controller-factory";
 import { makeLoadAccountDetailsByIdController } from "../factories/controllers/user/load-account-details-by-id-factory";
 import { makeLoadProjectDetailsByIdController } from "../factories/controllers/project/load-project-details-by-id-factory";
+import { makeAddUserToProjectController } from "../factories/controllers/project/add-user-to-project-factory";
 
 export const endpoints: Router = Router();
 
@@ -27,7 +28,8 @@ endpoints.route("/users/:id")
     .patch(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeUpdateAccountController()));
 
 endpoints.route("/projects")
-    .post(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeCreateProjectController()));
+    .post(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeCreateProjectController()))
+    .put(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeAddUserToProjectController()));
 
 endpoints.route("/projects/:id")
     .patch(expressAdapterMiddleware(makeAuthMiddleware(['ADMIN'])), expressAdapterController(makeUpdateProjectController()))

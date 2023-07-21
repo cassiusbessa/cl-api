@@ -22,3 +22,7 @@ export interface UpdateProjectRepository {
 export interface LoadProjectDetailsByIdRepository {
   loadDetailsById: (projectId: string) => Promise<ProjectDetails | null>
 }
+
+export interface AddUserToProjectRepository {
+  addUser: (userId: string, projectId: string) => Promise<boolean>
+}
